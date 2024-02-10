@@ -1,0 +1,25 @@
+
+
+version: '3'
+services:
+  nginx:
+    build: ./requirements/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./requirements/nginx/conf:/etc/nginx/conf.d
+    depends_on:
+      - mariadb
+
+  mariadb:
+    build: ./requirements/mariadb
+    environment:
+      - SQL_DATABASE=$${SQL_DATABASE}
+      - SQL_USER=$${SQL_USER}
+      - SQL_PASSWORD=$${SQL_PASSWORD}
+      - SQL_ROOT_PASSWORD=$${SQL_ROOT_PASSWORD}
+    volumes:
+      - ./requirements/mariadb/data:/var/lib/mysql
+    ports:
+      - "3306:3306"

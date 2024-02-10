@@ -10,14 +10,9 @@ RUN mkdir -p /var/run/nginx
 
 RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/inception.key -out /etc/nginx/ssl/inception.crt -subj "/C=DE/ST=BW/L=HN/O=42 Heilbronn/OU=student/CN=cmeng.42.fr/"
 
-COPY nginx.conf /etc/nginx
+COPY conf/nginx.conf /etc/nginx
 EXPOSE 443
 
 
 CMD ["nginx", "-g", "daemon off;"]
 
-
-
-# RUN rm /etc/nginx/conf.d/default.conf
-
-# COPY nginx.conf /etc/nginx/conf.d/

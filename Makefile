@@ -1,21 +1,18 @@
+include ./srcs/.env
 
 
 
+# nginx:
+# 	docker build -t nginx_image ./srcs/requirements/nginx
+# 	docker run -d -p 80:80 -p 443:443 --name nginx_container nginx_image
 
-nginx:
-	docker build -t nginx_image ./srcs/requirements/nginx
-	docker run -d -p 80:80 -p 443:443 --name nginx_container nginx_image
+build:
+	docker-compose -f srcs/docker-compose.yml up -d --build
 
-# build:
-# 	cd srcs && docker-compose build
+down:
+	docker-compose -f srcs/docker-compose.yml down
 
-# up:
-# 	cd srcs && docker-compose up -d
+clean:
+	docker-compose -f srcs/docker-compose.yml clean
 
-# down:
-# 	cd srcs && docker-compose down
-
-# clean:
-# 	cd srcs && docker-compose down --rmi all
-
-# all: build up
+all: build up
