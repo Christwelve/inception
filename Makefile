@@ -1,18 +1,45 @@
-include ./srcs/.env
+
+SRC 	= 	srcs/
+REQ 	= 	$(SRC)requirements/
+COMPOSE =	$(SRC)docker-compose.yml
+MARIA   =	$(REQ)mariadb/
+WPRESS  =	$(REQ)wordpress/
+ENV		=	--env-file $(SRC).env
+
+DB 		=	$(MARIA)data
+WP		=	$(WPRESS)data
+
+GREEN	=	\033[1;32m
+RED		=	\033[1;31m
+YELLOW	=	\033[1;33m
+CLEAR	=	\033[0m
 
 
-
-# nginx:
-# 	docker build -t nginx_image ./srcs/requirements/nginx
-# 	docker run -d -p 80:80 -p 443:443 --name nginx_container nginx_image
 
 build:
-	docker-compose -f srcs/docker-compose.yml up -d --build
-
-down:
-	docker-compose -f srcs/docker-compose.yml down
+	mkdir -p $(DB)
+	mkdir -p $(WP)
+	docker-compose -f $(COMPOSE) $(ENV) up -d --build
+	@echo "$(GREEN)*** Build containers ***$(CLEAR)"
 
 clean:
-	docker-compose -f srcs/docker-compose.yml clean
+	docker-compose -f $(COMPOSE) down
+	@echo "$(RED)*** Cleaned containers ***$(CLEAR)"
 
-all: build up
+fclean: clean
+	rm -rf $(DB) && mkdir -p $(DB)
+	rm -rf $(WP) && mkdir -p $(WP)
+	@echo "$(RED)*** Cleaned mariadb and wordpress data ***$(CLEAR)"
+
+status:
+	docker ps
+
+re: clean build
+
+logs:
+	@echo "$(YELLOW)*** Mariadb logs ***$(CLEAR)"
+	docker logs mariadb
+	@echo "$(YELLOW)*** Wordpress logs ***$(CLEAR)"
+	docker logs wordpress
+
+all: build

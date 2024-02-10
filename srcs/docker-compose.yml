@@ -1,25 +1,39 @@
-
-
 version: '3'
+networks:
+  inception:
+
+
 services:
+
   nginx:
-    build: ./requirements/nginx
+    container_name: nginx
+    image: nginx
+    networks:
+      - inception
+    build: requirements/nginx
     ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./requirements/nginx/conf:/etc/nginx/conf.d
+      - 443:443
+    # volumes:
+    #   - ./requirements/nginx/conf:/etc/nginx/conf.d
     depends_on:
       - mariadb
 
   mariadb:
-    build: ./requirements/mariadb
+    container_name: mariadb
+    image: mariadb
+    env_file:
+      - .env
+    networks:
+      - inception
+    build: requirements/mariadb
     environment:
       - SQL_DATABASE=$${SQL_DATABASE}
       - SQL_USER=$${SQL_USER}
       - SQL_PASSWORD=$${SQL_PASSWORD}
-      - SQL_ROOT_PASSWORD=$${SQL_ROOT_PASSWORD}
-    volumes:
-      - ./requirements/mariadb/data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - 3306:3306
+    # volumes:
+    #   - mariadb_data:/var/lib/mysql
+
+    # volumes:
+    #   mariadb_data:
