@@ -6,8 +6,8 @@ MARIA   =	$(REQ)mariadb/
 WPRESS  =	$(REQ)wordpress/
 ENV		=	--env-file $(SRC).env
 
-DB 		=	$(MARIA)data
-WP		=	$(WPRESS)data
+DB 		=	$(HOME)/data/mariadb
+WP		=	$(HOME)/data/wordpress
 
 GREEN	=	\033[1;32m
 RED		=	\033[1;31m
