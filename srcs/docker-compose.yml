@@ -1,22 +1,10 @@
 version: '3'
+
 networks:
   inception:
 
 
 services:
-
-  nginx:
-    container_name: nginx
-    image: nginx
-    networks:
-      - inception
-    build: requirements/nginx
-    ports:
-      - 443:443
-    # volumes:
-    #   - ./requirements/nginx/conf:/etc/nginx/conf.d
-    depends_on:
-      - mariadb
 
   mariadb:
     container_name: mariadb
@@ -27,13 +15,85 @@ services:
       - inception
     build: requirements/mariadb
     environment:
-      - SQL_DATABASE=$${SQL_DATABASE}
-      - SQL_USER=$${SQL_USER}
-      - SQL_PASSWORD=$${SQL_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
     ports:
       - 3306:3306
-    # volumes:
-    #   - mariadb_data:/var/lib/mysql
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: always
 
-    # volumes:
-    #   mariadb_data:
+  # wordpress:
+  #   container_name: wordpress
+  #   image: wordpress
+  #   networks:
+  #     - inception
+  #   build: requirements/wordpress
+  #   ports:
+  #     - 80:80
+  #   volumes:
+  #     - wordpress_data:/var/www/html
+  #     - wordpress_db:/var/lib/mysql
+  #   restart: always
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    networks:
+      - inception
+    build: requirements/nginx
+    ports:
+      - 443:443
+    restart: always
+    volumes:
+      - nginx_data:/etc/nginx/conf.d
+
+volumes:
+  mariadb_data:
+  nginx_data:
+    # wordpress_data:
+    # wordpress_db:
+
+    # version: '3'
+    # networks:
+    #   inception:
+
+
+    # services:
+    #   volumes:
+    #     mariadb_data:
+
+
+    #   mariadb:
+    #     container_name: mariadb
+    #     image: mariadb
+    #     networks:
+    #       - inception
+    #     build:
+    #       context: requirements/mariadb
+    #       args:
+    #         - DB_NAME=${DB_NAME}
+    #         - DB_USER=${DB_USER}
+    #         - DB_PASSWORD=${DB_PASSWORD}
+    #     ports:
+    #       - 3306:3306
+    #     volumes:
+    #       - mariadb_data:/var/lib/mysql
+    #     restart: always
+
+    #   nginx:
+    #     container_name: nginx
+    #     image: nginx
+    #     networks:
+    #       - inception
+    #     build: requirements/nginx
+    #     ports:
+    #       - 443:443
+    #     # volumes:
+    #     #   - ./requirements/nginx/conf:/etc/nginx/conf.d
+    #     # depends_on:
+    #     #   - mariadb
+    #     # volumes:
+    #     #   - mariadb_data:/var/lib/mysql
+
