@@ -6,8 +6,8 @@ MARIA   =	$(REQ)mariadb/
 WPRESS  =	$(REQ)wordpress/
 ENV		=	--env-file $(SRC).env
 
-DB 		=	$(HOME)/data/mariadb
-WP		=	$(HOME)/data/wordpress
+DB 		=	$(HOME)/data/db_volume
+WP		=	$(HOME)/data/wp_volume
 
 GREEN	=	\033[1;32m
 RED		=	\033[1;31m
@@ -19,6 +19,7 @@ CLEAR	=	\033[0m
 build:
 	mkdir -p $(DB)
 	mkdir -p $(WP)
+	ls $(HOME)/data/
 	docker-compose -f $(COMPOSE) $(ENV) up -d --build
 	@echo "$(GREEN)*** Build containers ***$(CLEAR)"
 
@@ -41,5 +42,8 @@ logs:
 	docker logs mariadb
 	@echo "$(YELLOW)*** Wordpress logs ***$(CLEAR)"
 	docker logs wordpress
+
+reset:
+	docker system prune -af
 
 all: build
