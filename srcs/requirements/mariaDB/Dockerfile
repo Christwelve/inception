@@ -11,7 +11,7 @@ RUN apt-get update -y \
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 COPY mariadb.sh /tmp/mariadb.sh
 RUN chmod +x /tmp/mariadb.sh
-# Expose MariaDB port
+
 EXPOSE 3306
 
 # Create necessary directories and set permissions
@@ -20,7 +20,6 @@ RUN mkdir -p /run/mysqld \
 	&& rm -f /run/mysqld/mysqld.sock
 
 
-# Run the initialization script during container startup
 CMD ["/tmp/mariadb.sh"]
 
 

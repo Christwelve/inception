@@ -1,12 +1,12 @@
 #!/bin/bash
 
-sleep 5
+# sleep 5
 # Ping the SQL server until it's reachable
-# until nc -z -v -w30 mariadb 3306
-# do
-#   echo "Waiting for database connection..."
-#   sleep 5
-# done
+until nc -z -v -w30 mariadb 3306
+do
+  echo "Waiting for database connection..."
+  sleep 5
+done
 
 cd /var/www/html
 
@@ -28,14 +28,14 @@ if ! wp core is-installed --allow-root 2>/dev/null; then
                     --admin_password=$WP_ADMIN_PASSWORD \
                     --admin_email=$WP_ADMIN_EMAIL
 
-    wp user create --allow-root \
-                   $WP_USER $WP_USER_EMAIL \
-                   --user_pass=$WP_USER_PASSWORD \
-                   --role=$WP_USER_ROLE
+    wp user create  --allow-root \
+                    $WP_USER $WP_USER_EMAIL \
+                    --user_pass=$WP_USER_PASSWORD \
+                    --role=author
 fi
 
 if [ ! -d /run/php ]; then
     mkdir /run/php
 fi
 
-/usr/sbin/php-fpm7.3 -D
+/usr/sbin/php-fpm7.3 -F
