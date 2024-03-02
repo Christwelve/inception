@@ -14,6 +14,7 @@ RUN openssl req -x509 \
 	-subj "/C=DE/ST=BW/L=HN/O=42 Heilbronn/OU=student/CN=cmeng.42.fr/"
 
 COPY conf/nginx.conf /etc/nginx
+RUN chmod 755 /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 443
