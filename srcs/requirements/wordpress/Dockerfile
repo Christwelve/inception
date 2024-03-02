@@ -7,6 +7,6 @@ RUN chmod +x wp-cli.phar
 RUN mv wp-cli.phar /usr/local/bin/wp
 
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
-COPY conf/auto_config.sh /auto_config.sh
+COPY conf/init.sh /init.sh
 
-CMD ["/bin/bash", "/auto_config.sh"]
+CMD ["/bin/bash", "/init.sh"]

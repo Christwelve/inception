@@ -6,8 +6,8 @@ MARIA   =	$(REQ)mariadb/
 WPRESS  =	$(REQ)wordpress/
 ENV		=	--env-file $(SRC).env
 
-DB 		=	$(HOME)/data/mariadb
-WP		=	$(HOME)/data/wordpress
+DB 		=	/Users/christianmeng/Documents/projects/inception/data/mariadb
+WP		=	/Users/christianmeng/Documents/projects/inception/data/wordpress
 
 GREEN	=	\033[1;32m
 RED		=	\033[1;31m
@@ -27,9 +27,12 @@ clean:
 	@echo "$(RED)*** Cleaned containers ***$(CLEAR)"
 
 fclean: clean
-	rm -rf $(DB) && mkdir -p $(DB)
-	rm -rf $(WP) && mkdir -p $(WP)
+	rm -rf $(DB) 
+	rm -rf $(WP)
 	@echo "$(RED)*** Cleaned mariadb and wordpress data ***$(CLEAR)"
+
+prune: fclean
+	docker system prune -af
 
 status:
 	docker ps
