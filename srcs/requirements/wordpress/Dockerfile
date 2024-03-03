@@ -1,12 +1,20 @@
 FROM debian:bullseye
 
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get -y install wget php7.3 php-fpm php-mysql mariadb-client
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN chmod +x wp-cli.phar
-RUN mv wp-cli.phar /usr/local/bin/wp
+# Install necessary packages
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install wget php7.4 php-fpm php-mysql mariadb-client && \
+    wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+    chmod +x wp-cli.phar && \
+    mv wp-cli.phar /usr/local/bin/wp && \
+    rm -rf /var/lib/apt/lists/* # Clean up
 
-COPY conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
-COPY conf/auto_config.sh /auto_config.sh
+# Copy configuration files and scripts
+COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+COPY conf/init.sh /init.sh
+RUN chmod +x /init.sh
 
-CMD ["/bin/bash", "/auto_config.sh"]
+# Define volume for WordPress files
+VOLUME ["/var/www/html"]
+
+ENTRYPOINT ["/bin/bash", "/init.sh"]

@@ -4,11 +4,27 @@ networks:
   inception:
 
 
+volumes:
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/cmeng/Documents/projects/inception/data/mariadb
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/cmeng/Documents/projects/inception/data/wordpress
+
 services:
 
   mariadb:
     container_name: mariadb
-    # image: mariadb
+    image: mariadb
     env_file:
       - .env
     networks:
@@ -17,12 +33,12 @@ services:
     expose:
       - 3306
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     restart: unless-stopped
 
   wordpress:
     container_name: wordpress
-    # image: wordpress
+    image: wordpress
     env_file:
       - .env
     networks:
@@ -31,27 +47,21 @@ services:
     expose:
       - 9000
     volumes:
-      - wordpress_data:/var/www/wordpress
+      - wordpress:/var/www/html
     restart: unless-stopped
     depends_on:
       - mariadb
 
   nginx:
     container_name: nginx
-    # image: nginx
+    image: nginx
     networks:
       - inception
     build: requirements/nginx
     ports:
       - 443:443
     volumes:
-      - wordpress_data:/var/www/wordpress
+      - wordpress:/var/www/html
     restart: unless-stopped
     depends_on:
       - wordpress
-
-volumes:
-  mariadb_data:
-  wordpress_data:
-
-
