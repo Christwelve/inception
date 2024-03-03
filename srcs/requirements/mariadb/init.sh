@@ -18,8 +18,8 @@ mysqld_safe --skip-networking &
 
 # Wait for MariaDB to be ready
 while ! mysqladmin ping --silent; do
-    echo -e "${YELLOW}Waiting for MariaDB to be ready...${NC}"
-    sleep 5
+    echo -e "${YELLOW}Waiting for mysql...${NC}"
+    sleep 1
 done
 
 mysql < /tmp/init.sql
