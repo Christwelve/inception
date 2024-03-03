@@ -11,14 +11,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/christianmeng/Documents/projects/inception/data/mariadb
+      device: /Users/cmeng/Documents/projects/inception/data/mariadb
   wordpress:
     name: wordpress
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/christianmeng/Documents/projects/inception/data/wordpress
+      device: /Users/cmeng/Documents/projects/inception/data/wordpress
 
 services:
 
@@ -61,7 +61,7 @@ services:
     ports:
       - 443:443
     volumes:
-      - wordpress:/var/www/html  
+      - wordpress:/var/www/html
     restart: unless-stopped
     depends_on:
       - wordpress

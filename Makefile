@@ -6,8 +6,17 @@ MARIA   =	$(REQ)mariadb/
 WPRESS  =	$(REQ)wordpress/
 ENV		=	--env-file $(SRC).env
 
-DB 		=	/Users/christianmeng/Documents/projects/inception/data/mariadb
-WP		=	/Users/christianmeng/Documents/projects/inception/data/wordpress
+# Air-Config
+# DB 		=	/Users/christianmeng/Documents/projects/inception/data/mariadb
+# WP		=	/Users/christianmeng/Documents/projects/inception/data/wordpress
+
+# VM-Config
+# DB 		=	/home/cmeng/inception/data/mariadb
+# WP		=	/home/cmeng/inception/data/wordpress
+
+#  42-Config
+DB 		=	/Users/cmeng/Documents/projects/inception/data/mariadb
+WP		=	/Users/cmeng/Documents/projects/inception/data/wordpress
 
 GREEN	=	\033[1;32m
 RED		=	\033[1;31m
@@ -27,7 +36,7 @@ clean:
 	@echo "$(RED)*** Cleaned containers ***$(CLEAR)"
 
 fclean: clean
-	rm -rf $(DB) 
+	rm -rf $(DB)
 	rm -rf $(WP)
 	@echo "$(RED)*** Cleaned mariadb and wordpress data ***$(CLEAR)"
 
