@@ -44,5 +44,7 @@ logs:
 	docker logs mariadb
 	@echo "$(YELLOW)*** Wordpress logs ***$(CLEAR)"
 	docker logs wordpress
+	@echo "$(YELLOW)*** Nginx logs ***$(CLEAR)"
+	docker logs nginx
 
 all: build
