@@ -1,12 +1,12 @@
 
 # setup
-setup debain vm
-	- sudo apt-get update
-	- sudo apt-get install git
+setup debain vm  
+	- sudo apt-get update  
+	- sudo apt-get install git  
 
-git clone <this_repo>
-cd inception
-./setup-vm.sh
+git clone <this_repo>  
+cd inception  
+./setup-vm.sh  
 
 
 
