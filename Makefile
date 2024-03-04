@@ -11,8 +11,8 @@ ENV		=	--env-file $(SRC).env
 # WP		=	/Users/christianmeng/Documents/projects/inception/data/wordpress
 
 # VM-Config
-DB 		=	/home/cmeng/inception/data/mariadb
-WP		=	/home/cmeng/inception/data/wordpress
+DB 		=	/home/cmeng/data/mariadb
+WP		=	/home/cmeng/data/wordpress
 
 # #  42-Config
 # DB 		=	/Users/cmeng/Documents/projects/inception/data/mariadb

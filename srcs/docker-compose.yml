@@ -11,14 +11,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/cmeng/inception/data/mariadb
+      device: /home/cmeng/data/mariadb
   wordpress:
     name: wordpress
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/cmeng/inception/data/wordpress
+      device: /home/cmeng/data/wordpress
 
 services:
 
