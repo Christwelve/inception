@@ -10,7 +10,7 @@ RUN apt-get update -y \
 
 # Copy MariaDB configuration file
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY init.sh /tmp/init.sh
+COPY tools/init.sh /tmp/init.sh
 RUN chmod +x /tmp/init.sh
 # Expose MariaDB port
 EXPOSE 3306

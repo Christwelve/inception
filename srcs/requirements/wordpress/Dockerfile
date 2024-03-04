@@ -11,7 +11,7 @@ RUN apt-get update && \
 
 # Copy configuration files and scripts
 COPY conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
-COPY conf/init.sh /init.sh
+COPY tools/init.sh /init.sh
 RUN chmod +x /init.sh
 
 # Define volume for WordPress files
